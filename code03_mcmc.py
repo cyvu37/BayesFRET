@@ -120,7 +120,7 @@ class Chain_Main:
                 pickle.dump( history[v], file )
             
             # Export data (txt).
-            with open( U.FPATH_ACTIVE( f"BayesFRET_data_sim_{U.RNGs[v].seed_str}_preview.txt" ), "w+" ) as file:
+            with open( U.func_getActivePath( f"BayesFRET_data_sim_{U.RNGs[v].seed_str}_preview.txt" ), "w+" ) as file:
                 file.write( f"{U.title}\nSAMPLE DATA FOR SIMULATION WITH RNG SEED {U.RNGs[v].seed_str}\n" +  
                             f"====================================================================================\n\n\n" + 
                             f"Runtime: {runtime}\n\n\nFirst Sample\n------------\n" )
@@ -145,7 +145,7 @@ class Chain_Main:
         G_done.restore( samples, U )
         # Notify.
         U._updateStatus2( "Exporting Figure 3 (5/5)", "" )
-        G_done.fig3.savefig( U.FPATH_ACTIVE( f"BayesFRET_fig03 FRET_efficiency_final_traces.png" ) )
+        G_done.fig3.savefig( U.func_getActivePath( f"BayesFRET_fig03 FRET_efficiency_final_traces.png" ) )
         U._updateStatus2( "Done!", "\n" )
         # Update tray icon.
         U.tray_state = lstICO[-1]

@@ -1048,7 +1048,7 @@ class BayesFRET(Ui_MainWindow):
             
             # Export data (pickle). Bundled for reuse.
             fname_params = "BayesFRET_data_params" + ("_and_true" if self.b_is_syn else "")
-            fp_params = self.U.FPATH_ACTIVE( f"{fname_params}.p" )
+            fp_params = self.U.func_getActivePath( f"{fname_params}.p" )
             with open(fp_params, "wb") as file:
                 if self.U.is_syn: pickle.dump( [params, self.U.TS], file )
                 else:             pickle.dump( params, file )
@@ -1057,7 +1057,7 @@ class BayesFRET(Ui_MainWindow):
             DATA = { "Parameters": {attr: getattr(obj, attr, 'NaN') for obj in [params] for attr in vars(obj)} }
             if self.b_is_syn:
                 DATA["True Values"] = {attr: getattr(obj, attr, 'NaN') for obj in [self.U.TS] for attr in vars(obj)}
-            with open( self.U.FPATH_ACTIVE( f"{fname_params}.txt" ), "w+" ) as file:
+            with open( self.U.func_getActivePath( f"{fname_params}.txt" ), "w+" ) as file:
                 txt1 = "PARAMETERS AND TRUE VALUES" if self.b_is_syn else "PARAMETERS"
                 txt2 = "="*len(self.title)
                 file.write( f"{self.title}\n{txt1}\n{txt2}\n" )
@@ -1080,7 +1080,7 @@ class BayesFRET(Ui_MainWindow):
             # Export Universal file.
             self.func_updateStatus1( "Exporting Universal file" )
             self.U.func_delForPickle()
-            with open(self.U.FPATH_ACTIVE( "BayesFRET_Universal_class.p" ), "wb") as file:
+            with open(self.U.func_getActivePath( "BayesFRET_Universal_class.p" ), "wb") as file:
                 pickle.dump( self.U, file )
             self.func_updateStatus1( "Done!" )
 
@@ -1124,7 +1124,7 @@ class BayesFRET(Ui_MainWindow):
             runtime = str(last_tme - first_tme)
             last_datetime = datetime.strftime( last_tme, "%a, %d %b %Y | %I:%M:%S %p" )
             print(f"Total runtime: {runtime}\n\n----< Run cleared @ {last_datetime} >----\n\n\n> Ready for use.")
-            with open( self.U.FPATH_ACTIVE("BayesFRET_performance.txt"), "w+" ) as f:
+            with open( self.U.func_getActivePath("BayesFRET_performance.txt"), "w+" ) as f:
                 f.write( f"Start: {start_datetime}\nFinish: {last_datetime}\nOverall Runtime: {runtime}\n\n" + 
                          "".join([f"Seed {seeds[i]} Runtime: {chain.runtimes[i]}\n" for i in range(4)]) )
 

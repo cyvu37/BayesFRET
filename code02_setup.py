@@ -114,7 +114,7 @@ def SHOW_EXPERIMENTAL_DATA(units_t: str, units_I: str, It_D: np.ndarray[np.float
     if U.show:
         fig1.show()
         fig1.canvas.flush_events()
-    fig1.savefig(U.FPATH_ACTIVE( 'BayesFRET_fig01 preview_data.png' ))
+    fig1.savefig(U.func_getActivePath( 'BayesFRET_fig01 preview_data.png' ))
     return U
 
 
@@ -343,7 +343,7 @@ def plot_synthetic_data(kap_D, T, dt, st, ft_D, ft_A, It_D, It_A, units_t, units
     if U.show:
         fig1.show()
         fig1.canvas.flush_events()
-    fig1.savefig(U.FPATH_ACTIVE( 'BayesFRET_fig01 preview_data.png' ))
+    fig1.savefig(U.func_getActivePath( 'BayesFRET_fig01 preview_data.png' ))
     return U
 
 
@@ -487,7 +487,7 @@ def GRAPH_PRIORS(params: Params, U: Universal):
     if U.show:
         fig2.show()
         fig2.canvas.flush_events()
-    fig2.savefig(U.FPATH_ACTIVE( f"BayesFRET_fig02 priors.png" ))
+    fig2.savefig(U.func_getActivePath( f"BayesFRET_fig02 priors.png" ))
 
 
 

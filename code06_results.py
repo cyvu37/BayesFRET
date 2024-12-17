@@ -152,7 +152,7 @@ def EFFICIENCY_AND_EMISSIONS(S: list[Chain_History], params: Params, U: Universa
     if U.show:
         fig.show()
         fig.canvas.flush_events()
-    fig.savefig(U.FPATH_ACTIVE( f"BayesFRET_fig04 FRET_efficiency_densities.png" ))
+    fig.savefig(U.func_getActivePath( f"BayesFRET_fig04 FRET_efficiency_densities.png" ))
     U._updateStatus2( "Done!", "\n" )
     
 
@@ -254,7 +254,7 @@ def EFFICIENCY_AND_EMISSIONS(S: list[Chain_History], params: Params, U: Universa
     if U.show:
         fig.show()
         fig.canvas.flush_events()
-    fig.savefig(U.FPATH_ACTIVE( f"BayesFRET_fig05a donor_emission_rates.png" ))
+    fig.savefig(U.func_getActivePath( f"BayesFRET_fig05a donor_emission_rates.png" ))
     U._updateStatus2( "Done!", "\n" )
     
 
@@ -352,7 +352,7 @@ def EFFICIENCY_AND_EMISSIONS(S: list[Chain_History], params: Params, U: Universa
     if U.show:
         fig.show()
         fig.canvas.flush_events()
-    fig.savefig(U.FPATH_ACTIVE( f"BayesFRET_fig05b acceptor_emission_rates.png" ))
+    fig.savefig(U.func_getActivePath( f"BayesFRET_fig05b acceptor_emission_rates.png" ))
     U._updateStatus2( "Done!", "\n" )
 
 
@@ -469,7 +469,7 @@ def PHOTOPHYSICS(S: list[Chain_History], params: Params, U: Universal, idxB: np.
         if U.show:
             fig.show()
             fig.canvas.flush_events()
-        fig.savefig(U.FPATH_ACTIVE( f"BayesFRET_fig0{fig_labels[i]} photophysics_of_seed_{U.RNGs[i].seed_str}.png" ))
+        fig.savefig(U.func_getActivePath( f"BayesFRET_fig0{fig_labels[i]} photophysics_of_seed_{U.RNGs[i].seed_str}.png" ))
         U._updateStatus2( "Done!", "\n" )
     #warnings.resetwarnings()
 
@@ -562,7 +562,7 @@ def CONVERGENCE(S: list[Chain_History], params: Params, U: Universal, idxA: np.n
     if U.show:
         fig7.show()
         fig7.canvas.flush_events()
-    fig7.savefig(U.FPATH_ACTIVE( f"BayesFRET_fig07 sample_convergence.png" ))
+    fig7.savefig(U.func_getActivePath( f"BayesFRET_fig07 sample_convergence.png" ))
     U._updateStatus2( "Done!", "\n" )
     
 
@@ -599,7 +599,7 @@ def FINAL_GRAPHS(S: list[Chain_History], params: Params, U: Universal, idxA: np.
     
     # Extract data from best traces.
     for v in U.range_seeds:
-        with open( U.FPATH_ACTIVE( f"BayesFRET_data_sim_{U.RNGs[v].seed_str}_preview.txt" ), "a" ) as file:
+        with open( U.func_getActivePath( f"BayesFRET_data_sim_{U.RNGs[v].seed_str}_preview.txt" ), "a" ) as file:
             a = f"Best Sample (n = {ix_adj[v]})"
             b = "".join( ["-"]*len(a) )
             file.write( f"\n\n{a}\n{b}\n" )
@@ -751,7 +751,7 @@ def FINAL_GRAPHS(S: list[Chain_History], params: Params, U: Universal, idxA: np.
     if U.show:
         fig8a.show()
         fig8a.canvas.flush_events()
-    fig8a.savefig(U.FPATH_ACTIVE( f"BayesFRET_fig08a state_convergence.png" ))
+    fig8a.savefig(U.func_getActivePath( f"BayesFRET_fig08a state_convergence.png" ))
     U._updateStatus2( "Done!", "\n" )
 
 
@@ -806,7 +806,7 @@ def FINAL_GRAPHS(S: list[Chain_History], params: Params, U: Universal, idxA: np.
     if U.show:
         fig8b.show()
         fig8b.canvas.flush_events()
-    fig8b.savefig(U.FPATH_ACTIVE( f"BayesFRET_fig08b FRET_efficiency_best_traces.png" ))
+    fig8b.savefig(U.func_getActivePath( f"BayesFRET_fig08b FRET_efficiency_best_traces.png" ))
     U._updateStatus2( "Done!", "\n" )
     
 

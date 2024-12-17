@@ -278,11 +278,6 @@ class Universal:
     """Font size for legend text."""
     fa     = 0
     """Alpha for legend frame."""
-    theme_switch = {
-        "Dark": "BayesFRET light logo",
-        "Light": "BayesFRET dark logo",
-    }
-    """Type of logo to return based on theme switch."""
     figs: list[Figure] = []
 
 
@@ -320,7 +315,7 @@ class Universal:
         """The full path to the active directory to store output. ex. C:\\...\\parentDir\\BayesFRET_{curr_date}\n\nCHANGE THIS IF FOLDER MOVED AFTER SIMULATION!"""
         self.DIR_RESOURCES = rd
         """Current directory of the BayesFRET program.\n\nCHANGE THIS IF THE BAYESFRET FOLDER IS MOVED!"""
-        self.filenames = [ self.FPATH_ACTIVE( f"BayesFRET_data_sim_{self.RNGs[v].seed_str}_history.p" ) for v in self.range_seeds ]
+        self.filenames = [ self.func_getActivePath( f"BayesFRET_data_sim_{self.RNGs[v].seed_str}_history.p" ) for v in self.range_seeds ]
         """The filenames of the RNG history pickle files."""
         self.THEME = theme
         """The dark/light theme for icons: 'BayesFRET dark icon' or 'BayesFRET light icon'"""
@@ -386,7 +381,7 @@ class Universal:
 
 
 
-    def FPATH_ACTIVE(self, fname: str):
+    def func_getActivePath(self, fname: str):
         """Returns the full filepath of the active directory merged with the file `fname`."""
         return os.path.join( self.DIR_ACTIVE, fname )
     
