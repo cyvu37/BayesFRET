@@ -94,60 +94,20 @@ def EFFICIENCY_AND_EMISSIONS(S: list[Chain_History], params: Params, U: Universa
     at = 0.5
     lwt = 0.8
 
-    eff_mcmc = 100 * S[0].eff[idxB]
-    ax1 = fig.add_subplot( 2, 2, 1,
-                            ylim   = (0, 100),
-                            yticks = range(0, 110, 10),
-                            ylabel = "FRET efficiency (%)",
-                            xlabel = f"Probability density of RNG Seed {U.RNGs[0].seed_str}" )
-    ax1.hist( eff_mcmc, bins=bins, density=True, stacked=True, orientation='horizontal', color=[U.col_R[0]]*eff_mcmc.shape[1], label="Estimated" )
-    ax1.hist( eff_star, bins=bins, density=True, stacked=True, orientation='horizontal', color=U.col_m, alpha=a,               label="Apparent" )
-    if U.is_syn:
-        xlim = ax1.get_xlim()
-        ax1.plot( xlim, [true_eff_mcmc[0]]*2,  'k--', lw=lwt, alpha=at, label="True" )
-        ax1.plot( xlim, [true_eff_mcmc[1:]]*2, 'k--', lw=lwt, alpha=at )
-    ax1.legend( loc='upper right', framealpha=0, fontsize=U.fs_l )
-    ax1.ticklabel_format( style='sci', axis='x', scilimits=(0,0) )
-
-    eff_mcmc = 100 * S[1].eff[idxB]
-    ax2 = fig.add_subplot( 2, 2, 2,
-                            sharey = ax1,
-                            xlabel = f"Probability density of RNG Seed {U.RNGs[1].seed_str}" )
-    ax2.hist( eff_mcmc, bins=bins, density=True, stacked=True, orientation='horizontal', color=[U.col_R[1]]*eff_mcmc.shape[1], label="Estimated" )
-    ax2.hist( eff_star, bins=bins, density=True, stacked=True, orientation='horizontal', color=U.col_m, alpha=a )
-    if U.is_syn:
-        xlim = ax2.get_xlim()
-        ax2.plot( xlim, [true_eff_mcmc[0]]*2,  'k--', lw=lwt, alpha=at )
-        ax2.plot( xlim, [true_eff_mcmc[1:]]*2, 'k--', lw=lwt, alpha=at )
-    ax2.legend( loc='upper right', framealpha=0, fontsize=U.fs_l )
-    ax2.ticklabel_format( style='sci', axis='x', scilimits=(0,0) )
-
-    eff_mcmc = 100 * S[2].eff[idxB]
-    ax3 = fig.add_subplot( 2, 2, 3,
-                            sharey = ax1,
-                            xlabel = f"Probability density of RNG Seed {U.RNGs[2].seed_str}",
-                            ylabel = ax1.get_ylabel() )
-    ax3.hist( eff_mcmc, bins=bins, density=True, stacked=True, orientation='horizontal', color=[U.col_R[2]]*eff_mcmc.shape[1], label="Estimated" )
-    ax3.hist( eff_star, bins=bins, density=True, stacked=True, orientation='horizontal', color=U.col_m, alpha=a )
-    if U.is_syn:
-        xlim = ax3.get_xlim()
-        ax3.plot( xlim, [true_eff_mcmc[0]]*2,  'k--', lw=lwt, alpha=at )
-        ax3.plot( xlim, [true_eff_mcmc[1:]]*2, 'k--', lw=lwt, alpha=at )
-    ax3.legend( loc='upper right', framealpha=0, fontsize=U.fs_l )
-    ax3.ticklabel_format( style='sci', axis='x', scilimits=(0,0) )
-
-    eff_mcmc = 100 * S[3].eff[idxB]
-    ax4 = fig.add_subplot( 2, 2, 4,
-                            sharey = ax1,
-                            xlabel = f"Probability density of RNG Seed {U.RNGs[3].seed_str}" )
-    ax4.hist( eff_mcmc, bins=bins, density=True, stacked=True, orientation='horizontal', color=[U.col_R[3]]*eff_mcmc.shape[1], label="Estimated" )
-    ax4.hist( eff_star, bins=bins, density=True, stacked=True, orientation='horizontal', color=U.col_m, alpha=a )
-    if U.is_syn:
-        xlim = ax4.get_xlim()
-        ax4.plot( xlim, [true_eff_mcmc[0]]*2,  'k--', lw=lwt, alpha=at )
-        ax4.plot( xlim, [true_eff_mcmc[1:]]*2, 'k--', lw=lwt, alpha=at )
-    ax4.legend( loc='upper right', framealpha=0, fontsize=U.fs_l )
-    ax4.ticklabel_format( style='sci', axis='x', scilimits=(0,0) )
+    ylim = (0, 100)
+    yticks = range(0, 110, 10)
+    for i in U.range_seeds:
+        ax = fig.add_subplot( 2, 2, i+1, 
+                               xlabel = f"Probability density of RNG Seed {U.RNGs[i].seed_str}",
+                               ylim   = ylim,
+                               yticks = yticks )
+        eff_mcmc = 100 * S[i].eff[idxB]
+        ax.hist( eff_mcmc, bins=bins, density=True, stacked=True, orientation='horizontal', color=[U.col_R[i]]*eff_mcmc.shape[1], label="Estimated" )
+        ax.hist( eff_star, bins=bins, density=True, stacked=True, orientation='horizontal', color=U.col_m, alpha=a, label=("Apparent" if i == 0 else None) )
+        if U.is_syn:
+            ax.plot( ax.get_xlim(), [true_eff_mcmc[0]]*2,  'k--', lw=lwt, alpha=at, label=("True" if i == 0 else None) )
+            ax.plot( ax.get_xlim(), [true_eff_mcmc[1:]]*2, 'k--', lw=lwt, alpha=at )
+        if i % 2 == 0: ax.set_ylabel( "FRET efficiency (%)" )
 
     if U.show:
         fig.show()
@@ -166,90 +126,43 @@ def EFFICIENCY_AND_EMISSIONS(S: list[Chain_History], params: Params, U: Universa
     bins3 = 25
     a = 0.5
 
-    ax1b = fig.add_subplot( 3, 4, 9,
-                             xlabel = "Probability density",
-                             ylabel = "$\\xi^D$: Background PE rate ({}/{})".format(params.units_I, params.units_t) )
-    ax1b.hist( S[0].ksi_D[idxB], bins=bins3, density=True, orientation='horizontal', color=U.col_R[0] )
-    if U.is_syn:
-        ax1b.plot( ax1b.get_xlim(), [U.TS.true_ksi_D]*2, 'k--', lw=lwt, alpha=at )
-    ax1b.ticklabel_format( style='sci', axis='x', scilimits=(0,0) )
-
-    ax2b = fig.add_subplot( 3, 4, 10,
-                             xlabel = "Probability density" )
-    ax2b.hist( S[1].ksi_D[idxB], bins=bins3, density=True, orientation='horizontal', color=U.col_R[1] )
-    if U.is_syn:
-        ax2b.plot( ax2b.get_xlim(), [U.TS.true_ksi_D]*2, 'k--', lw=lwt, alpha=at )
-    ax2b.ticklabel_format( style='sci', axis='x', scilimits=(0,0) )
-
-    ax3b = fig.add_subplot( 3, 4, 11,
-                             xlabel = "Probability density" )
-    ax3b.hist( S[2].ksi_D[idxB], bins=bins3, density=True, orientation='horizontal', color=U.col_R[2] )
-    if U.is_syn:
-        ax3b.plot( ax3b.get_xlim(), [U.TS.true_ksi_D]*2, 'k--', lw=lwt, alpha=at )
-    ax3b.ticklabel_format( style='sci', axis='x', scilimits=(0,0) )
-
-    ax4b = fig.add_subplot( 3, 4, 12,
-                             xlabel = "Probability density" )
-    ax4b.hist( S[3].ksi_D[idxB], bins=bins3, density=True, orientation='horizontal', color=U.col_R[3] )
-    if U.is_syn:
-        ax4b.plot( ax4b.get_xlim(), [U.TS.true_ksi_D]*2, 'k--', lw=lwt, alpha=at )
-    ax4b.ticklabel_format( style='sci', axis='x', scilimits=(0,0) )
-
-    lam_D_mcmc = np.moveaxis(S[0].lam_D[idxB], 0, 1)
-    ax1a = fig.add_subplot( 3, 4, (1, 5),
-                             ylim   = (0, 3 * np.mean(lam_D_mcmc)),
-                             ylabel = "$\\lambda^D$: Donor PE rate ({}/{})".format(params.units_I, params.units_t),
-                             title  = f"RNG Seed {U.RNGs[0].seed_str}" )
-    ax1a.hist( lam_D_mcmc, bins=bins1, density=True, stacked=True, orientation='horizontal', color=[U.col_R[0]]*lam_D_mcmc.shape[1], label="Estimated" )
-    ax1a.hist( lam_D_star, bins=bins2, density=True, stacked=True, orientation='horizontal', color=U.col_m, alpha=a,                 label="Apparent" )
-    if U.is_syn:
-        xlim = ax1a.get_xlim()
-        ax1a.plot( xlim, [U.TS.true_lam_D[0]]*2,  'k--', lw=lwt, alpha=at, label="True" )
-        ax1a.plot( xlim, [U.TS.true_lam_D[1:]]*2, 'k--', lw=lwt, alpha=at )
-    ax1a.legend( loc='upper right', framealpha=0, fontsize=U.fs_l )
-    ax1a.ticklabel_format( style='sci', axis='x', scilimits=(0,0) )
-
-    lam_D_mcmc = np.moveaxis(S[1].lam_D[idxB], 0, 1)
-    ax2a = fig.add_subplot( 3, 4, (2, 6),
-                             ylim   = (0, 3 * np.mean(lam_D_mcmc)),
-                             title  = f"RNG Seed {U.RNGs[1].seed_str}" )
-    ax2a.hist( lam_D_mcmc, bins=bins1, density=True, stacked=True, orientation='horizontal', color=[U.col_R[1]]*lam_D_mcmc.shape[1], label="Estimated" )
-    ax2a.hist( lam_D_star, bins=bins2, density=True, stacked=True, orientation='horizontal', color=U.col_m, alpha=a )
-    if U.is_syn:
-        xlim = ax2a.get_xlim()
-        ax2a.plot( xlim, [U.TS.true_lam_D]*2,  'k--', lw=lwt, alpha=at )
-    ax2a.legend( loc='upper right', framealpha=0, fontsize=U.fs_l )
-    ax2a.ticklabel_format( style='sci', axis='x', scilimits=(0,0) )
-
-    lam_D_mcmc = np.moveaxis(S[2].lam_D[idxB], 0, 1)
-    ax3a = fig.add_subplot( 3, 4, (3, 7),
-                             ylim   = (0, 3 * np.mean(lam_D_mcmc)),
-                             title  = f"RNG Seed {U.RNGs[2].seed_str}" )
-    ax3a.hist( lam_D_mcmc, bins=bins1, density=True, stacked=True, orientation='horizontal', color=[U.col_R[2]]*lam_D_mcmc.shape[1], label="Estimated" )
-    ax3a.hist( lam_D_star, bins=bins2, density=True, stacked=True, orientation='horizontal', color=U.col_m, alpha=a )
-    if U.is_syn:
-        xlim = ax3a.get_xlim()
-        ax3a.plot( xlim, [U.TS.true_lam_D]*2,  'k--', lw=lwt, alpha=at )
-    ax3a.legend( loc='upper right', framealpha=0, fontsize=U.fs_l )
-    ax3a.ticklabel_format( style='sci', axis='x', scilimits=(0,0) )
-
-    lam_D_mcmc = np.moveaxis(S[3].lam_D[idxB], 0, 1)
-    ax4a = fig.add_subplot( 3, 4, (4, 8),
-                             ylim   = (0, 3 * np.mean(lam_D_mcmc)),
-                             title  = f"RNG Seed {U.RNGs[3].seed_str}" )
-    ax4a.hist( lam_D_mcmc, bins=bins1, density=True, stacked=True, orientation='horizontal', color=[U.col_R[3]]*lam_D_mcmc.shape[1], label="Estimated" )
-    ax4a.hist( lam_D_star, bins=bins2, density=True, stacked=True, orientation='horizontal', color=U.col_m, alpha=a )
-    if U.is_syn:
-        xlim = ax4a.get_xlim()
-        ax4a.plot( xlim, [U.TS.true_lam_D]*2,  'k--', lw=lwt, alpha=at )
-    ax4a.legend( loc='upper right', framealpha=0, fontsize=U.fs_l )
-    ax4a.ticklabel_format( style='sci', axis='x', scilimits=(0,0) )
+    # Bottom graphs
+    for i in U.range_seeds: 
+        ax = fig.add_subplot( 3, 4, i+9, xlabel = "Probability density" )
+        # Set y-label only for the first subplot.
+        if i == 0: ax.set_ylabel( "$\\xi^D$: Background PE rate ({}/{})".format(params.units_I, params.units_t) )
+        # Main histogram.
+        ax.hist( S[i].ksi_D[idxB], bins=bins3, density=True, orientation='horizontal', color=U.col_R[i] )
+        # Plot true_ksi_D if synthetic data is available.
+        if U.is_syn: ax.plot( ax.get_xlim(), [U.TS.true_ksi_D]*2, 'k--', lw=lwt, alpha=at )
+        # Set scientific notation for x-axis.
+        ax.ticklabel_format( style='sci', axis='x', scilimits=(0,0) )
     
-    ylim = ( 0, np.amax( np.asarray([ ax1a.get_ylim(), ax2a.get_ylim(), ax3a.get_ylim(), ax4a.get_ylim() ]) ) )
-    ax1a.set_ylim( ylim )
-    ax2a.set_ylim( ylim )
-    ax3a.set_ylim( ylim )
-    ax4a.set_ylim( ylim )
+    # Upper graphs
+    lam_D_star = params.It_D / params.dD
+    #lam_D_mcmcs = [np.moveaxis( S[i].lam_D[idxB], 0, 1 ) for i in U.range_seeds]
+    max_lam_D = np.amax([ 3*np.mean(l, dtype = l.dtype) for l in [ np.moveaxis( S[i].lam_D[idxB], 0, 1 ) for i in U.range_seeds ] ])
+    for i in U.range_seeds: 
+        if_first = i == 0
+        ax = fig.add_subplot( 3, 4, (i+1, i+5),
+                                 ylim  = (0, max_lam_D),
+                                 title = f"RNG Seed {U.RNGs[i].seed_str}" )
+        # Set y-label only for the first subplot.
+        if if_first: ax.set_ylabel( "$\\lambda^D$: Donor PE rate ({}/{})".format(params.units_I, params.units_t) )
+        # Main histograms.
+        lam_D_mcmc = np.moveaxis( S[i].lam_D[idxB], 0, 1 )
+        ax.hist( lam_D_mcmc, bins=bins1, density=True, stacked=True, orientation='horizontal', color=[U.col_R[i]]*lam_D_mcmc.shape[1], label="Estimated" )
+        ax.hist( lam_D_star, bins=bins2, density=True, stacked=True, orientation='horizontal', color=U.col_m, alpha=a, label=("Apparent" if if_first else None) )
+        # Handle true values and their labels.
+        if U.is_syn:
+            if if_first:
+                ax.plot( ax.get_xlim(), [U.TS.true_lam_D[0]]*2,  'k--', lw=lwt, alpha=at, label="True" )
+                ax.plot( ax.get_xlim(), [U.TS.true_lam_D[1:]]*2, 'k--', lw=lwt, alpha=at )
+            else:
+                ax.plot( ax.get_xlim(), [U.TS.true_lam_D]*2,  'k--', lw=lwt, alpha=at )
+        # Set scientific notation for x-axis.
+        ax.ticklabel_format( style='sci', axis='x', scilimits=(0,0) )
+        ax.legend( loc='upper right', framealpha=0, fontsize=U.fs_l )
 
     if U.show:
         fig.show()
@@ -264,90 +177,43 @@ def EFFICIENCY_AND_EMISSIONS(S: list[Chain_History], params: Params, U: Universa
     U._updateStatus2( "Graphing Figure 5b", "" )
     fig = U.make_figure( "5b | Densities: Acceptor Emission Rates", True )
 
-    ax1b = fig.add_subplot( 3, 4, 9,
-                             xlabel = "Probability density",
-                             ylabel = "$\\xi^A$: Background PE rate ({}/{})".format(params.units_I, params.units_t) )
-    ax1b.hist( S[0].ksi_A[idxB], bins=bins3, density=True, orientation='horizontal', color=U.col_R[0] )
-    if U.is_syn:
-        ax1b.plot( ax1b.get_xlim(), [U.TS.true_ksi_A]*2, 'k--', lw=lwt, alpha=at )
-    ax1b.ticklabel_format( style='sci', axis='x', scilimits=(0,0) )
-
-    ax2b = fig.add_subplot( 3, 4, 10,
-                             xlabel = "Probability density" )
-    ax2b.hist( S[1].ksi_A[idxB], bins=bins3, density=True, orientation='horizontal', color=U.col_R[1] )
-    if U.is_syn:
-        ax2b.plot( ax2b.get_xlim(), [U.TS.true_ksi_A]*2, 'k--', lw=lwt, alpha=at )
-    ax2b.ticklabel_format( style='sci', axis='x', scilimits=(0,0) )
-
-    ax3b = fig.add_subplot( 3, 4, 11,
-                             xlabel = "Probability density" )
-    ax3b.hist( S[2].ksi_A[idxB], bins=bins3, density=True, orientation='horizontal', color=U.col_R[2] )
-    if U.is_syn:
-        ax3b.plot( ax3b.get_xlim(), [U.TS.true_ksi_A]*2, 'k--', lw=lwt, alpha=at )
-    ax3b.ticklabel_format( style='sci', axis='x', scilimits=(0,0) )
-
-    ax4b = fig.add_subplot( 3, 4, 12,
-                             xlabel = "Probability density" )
-    ax4b.hist( S[3].ksi_A[idxB], bins=bins3, density=True, orientation='horizontal', color=U.col_R[3] )
-    if U.is_syn:
-        ax4b.plot( ax4b.get_xlim(), [U.TS.true_ksi_A]*2, 'k--', lw=lwt, alpha=at )
-    ax4b.ticklabel_format( style='sci', axis='x', scilimits=(0,0) )
-
-    lam_A_mcmc = np.moveaxis(S[0].lam_A[idxB], 0, 1)
-    ax1a = fig.add_subplot( 3, 4, (1, 5),
-                             ylabel = "$\\lambda^A$: Acceptor PE rate ({}/{})".format(params.units_I, params.units_t),
-                             ylim   = (0, 3 * np.mean(lam_A_mcmc)),
-                             title  = f"RNG Seed {U.RNGs[0].seed_str}" )
-    ax1a.hist( lam_A_mcmc, bins=bins1, density=True, stacked=True, orientation='horizontal', color=[U.col_R[0]]*lam_A_mcmc.shape[1], label="Estimated" )
-    ax1a.hist( lam_A_star, bins=bins2, density=True, stacked=True, orientation='horizontal', color=U.col_m, alpha=a,                 label="Apparent" )
-    if U.is_syn:
-        xlim = ax1a.get_xlim()
-        ax1a.plot( xlim, [U.TS.true_lam_A[0]]*2,  'k--', lw=lwt, alpha=at, label="True" )
-        ax1a.plot( xlim, [U.TS.true_lam_A[1:]]*2, 'k--', lw=lwt, alpha=at )
-    ax1a.legend( loc='upper right', framealpha=0, fontsize=U.fs_l )
-    ax1a.ticklabel_format( style='sci', axis='x', scilimits=(0,0) )
-
-    lam_A_mcmc = np.moveaxis(S[1].lam_A[idxB], 0, 1)
-    ax2a = fig.add_subplot( 3, 4, (2, 6),
-                             ylim   = (0, 3 * np.mean(lam_A_mcmc)),
-                             title  = f"RNG Seed {U.RNGs[1].seed_str}" )
-    ax2a.hist( lam_A_mcmc, bins=bins1, density=True, stacked=True, orientation='horizontal', color=[U.col_R[1]]*lam_A_mcmc.shape[1], label="Estimated" )
-    ax2a.hist( lam_A_star, bins=bins2, density=True, stacked=True, orientation='horizontal', color=U.col_m, alpha=a )
-    if U.is_syn:
-        xlim = ax2a.get_xlim()
-        ax2a.plot( xlim, [U.TS.true_lam_A]*2,  'k--', lw=lwt, alpha=at )
-    ax2a.legend( loc='upper right', framealpha=0, fontsize=U.fs_l )
-    ax2a.ticklabel_format( style='sci', axis='x', scilimits=(0,0) )
-
-    lam_A_mcmc = np.moveaxis(S[2].lam_A[idxB], 0, 1)
-    ax3a = fig.add_subplot( 3, 4, (3, 7),
-                             ylim   = (0, 3 * np.mean(lam_A_mcmc)),
-                             title  = f"RNG Seed {U.RNGs[2].seed_str}" )
-    ax3a.hist( lam_A_mcmc, bins=bins1, density=True, stacked=True, orientation='horizontal', color=[U.col_R[2]]*lam_A_mcmc.shape[1], label="Estimated" )
-    ax3a.hist( lam_A_star, bins=bins2, density=True, stacked=True, orientation='horizontal', color=U.col_m, alpha=a )
-    if U.is_syn:
-        xlim = ax3a.get_xlim()
-        ax3a.plot( xlim, [U.TS.true_lam_A]*2,  'k--', lw=lwt, alpha=at )
-    ax3a.legend( loc='upper right', framealpha=0, fontsize=U.fs_l )
-    ax3a.ticklabel_format( style='sci', axis='x', scilimits=(0,0) )
-
-    lam_A_mcmc = np.moveaxis(S[3].lam_A[idxB], 0, 1)
-    ax4a = fig.add_subplot( 3, 4, (4, 8),
-                             ylim   = (0, 3 * np.mean(lam_A_mcmc)),
-                             title  = f"RNG Seed {U.RNGs[3].seed_str}" )
-    ax4a.hist( lam_A_mcmc, bins=bins1, density=True, stacked=True, orientation='horizontal', color=[U.col_R[3]]*lam_A_mcmc.shape[1], label="Estimated" )
-    ax4a.hist( lam_A_star, bins=bins2, density=True, stacked=True, orientation='horizontal', color=U.col_m, alpha=a )
-    if U.is_syn:
-        xlim = ax4a.get_xlim()
-        ax4a.plot( xlim, [U.TS.true_lam_A]*2,  'k--', lw=lwt, alpha=at )
-    ax4a.legend( loc='upper right', framealpha=0, fontsize=U.fs_l )
-    ax4a.ticklabel_format( style='sci', axis='x', scilimits=(0,0) )
+    # Bottom graphs
+    for i in U.range_seeds: 
+        ax = fig.add_subplot( 3, 4, i+9, xlabel = "Probability density" )
+        # Set y-label only for the first subplot.
+        if i == 0: ax.set_ylabel( "$\\xi^A$: Background PE rate ({}/{})".format(params.units_I, params.units_t) )
+        # Main histogram.
+        ax.hist( S[i].ksi_A[idxB], bins=bins3, density=True, orientation='horizontal', color=U.col_R[i] )
+        # Plot true_ksi_A if synthetic data is available.
+        if U.is_syn: ax.plot( ax.get_xlim(), [U.TS.true_ksi_A]*2, 'k--', lw=lwt, alpha=at )
+        # Set scientific notation for x-axis.
+        ax.ticklabel_format( style='sci', axis='x', scilimits=(0,0) )
     
-    ylim = ( 0, np.amax( np.asarray([ ax1a.get_ylim(), ax2a.get_ylim(), ax3a.get_ylim(), ax4a.get_ylim() ]) ) )
-    ax1a.set_ylim( ylim )
-    ax2a.set_ylim( ylim )
-    ax3a.set_ylim( ylim )
-    ax4a.set_ylim( ylim )
+    # Upper graphs
+    lam_A_star = params.It_A / params.dD
+    #lam_A_mcmcs = [ np.moveaxis( S[i].lam_A[idxB], 0, 1 ) for i in U.range_seeds ]
+    max_lam_A = np.amax([ 3*np.mean(l, dtype = l.dtype) for l in [ np.moveaxis( S[i].lam_A[idxB], 0, 1 ) for i in U.range_seeds ] ])
+    for i in U.range_seeds: 
+        if_first = i == 0
+        ax = fig.add_subplot( 3, 4, (i+1, i+5),
+                                 ylim  = (0, max_lam_A),
+                                 title = f"RNG Seed {U.RNGs[i].seed_str}" )
+        # Set y-label only for the first subplot.
+        if if_first: ax.set_ylabel( "$\\lambda^A$: Acceptor PE rate ({}/{})".format(params.units_I, params.units_t) )
+        # Main histograms.
+        lam_A_mcmc = np.moveaxis( S[i].lam_A[idxB], 0, 1 )
+        ax.hist( lam_A_mcmc, bins=bins1, density=True, stacked=True, orientation='horizontal', color=[U.col_R[i]]*lam_A_mcmc.shape[1], label="Estimated" )
+        ax.hist( lam_A_star,     bins=bins2, density=True, stacked=True, orientation='horizontal', color=U.col_m, alpha=a, label=("Apparent" if if_first else None) )
+        # Handle true values and their labels.
+        if U.is_syn:
+            if if_first:
+                ax.plot( ax.get_xlim(), [U.TS.true_lam_A[0]]*2,  'k--', lw=lwt, alpha=at, label="True" )
+                ax.plot( ax.get_xlim(), [U.TS.true_lam_A[1:]]*2, 'k--', lw=lwt, alpha=at )
+            else:
+                ax.plot( ax.get_xlim(), [U.TS.true_lam_A]*2,  'k--', lw=lwt, alpha=at )
+        # Set scientific notation for x-axis.
+        ax.ticklabel_format( style='sci', axis='x', scilimits=(0,0) )
+        ax.legend( loc='upper right', framealpha=0, fontsize=U.fs_l )
 
     if U.show:
         fig.show()
@@ -388,15 +254,13 @@ def PHOTOPHYSICS(S: list[Chain_History], params: Params, U: Universal, idxB: np.
     lwt   = 0.8
     fig_labels = ["6a", "6b", "6c", "6d"]
 
-    #warnings.filterwarnings('ignore')
     for i in U.range_seeds:
-        string = f"{fig_labels[i]} | Densities: Photophysics of RNG Seed {U.RNGs[i].seed_str}"
-        U._updateStatus2( f"Graphing Figure {string}", "" )
+        U._updateStatus2( f"Graphing Figure {fig_labels[i]}", "" )
         w0_D_mcmc = 1 - S[i].wi_D[idxB, 0]
         w1_D_mcmc =     S[i].wi_D[idxB, 1]
         w0_A_mcmc = 1 - S[i].wi_A[idxB, 0]
         w1_A_mcmc =     S[i].wi_A[idxB, 1]
-        fig = U.make_figure( f"{string}", True )
+        fig = U.make_figure( f"{fig_labels[i]} | Densities: Photophysics of RNG Seed {U.RNGs[i].seed_str}", True )
         ax1 = fig.add_subplot( 2, 3, 1,
                                xlim = (0, 1),
                                ylabel = "Donor probability density" )
@@ -471,7 +335,6 @@ def PHOTOPHYSICS(S: list[Chain_History], params: Params, U: Universal, idxB: np.
             fig.canvas.flush_events()
         fig.savefig(U.func_getActivePath( f"BayesFRET_fig0{fig_labels[i]} photophysics_of_seed_{U.RNGs[i].seed_str}.png" ))
         U._updateStatus2( "Done!", "\n" )
-    #warnings.resetwarnings()
 
 
 

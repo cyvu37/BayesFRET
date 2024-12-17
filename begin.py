@@ -247,11 +247,11 @@ class BayesFRET(Ui_MainWindow):
         # Continue setting up menu + tray.
         self.menu_t3 = self.menu.addAction( "-- Status --" )
         self.menu_t3.setDisabled( True )
-        self.menu_run = QAction( self.func_getIcon( "play-triangle-outline_icon-icons.com_73185.ico" ), "Run BayesFRET" )
+        self.menu_run = QAction( self.func_getIcon( "play_music_icon_231499.ico" ), "Run BayesFRET" )
         self.menu_run.triggered.connect( self.func_SETUP_run )
         self.menu.addAction( self.menu_run )
         self.menu_run.setEnabled( False )
-        self.menu_quit = QAction( self.func_getIcon( "x-mark-16.ico" ), "Exit BayesFRET" )
+        self.menu_quit = QAction( self.func_getIcon( "vcsconflicting_93497.ico" ), "Exit BayesFRET" )
         self.menu_quit.triggered.connect( self.func_closeEvent )
         self.menu.addAction( self.menu_quit )
         self.menu.addSeparator()
@@ -267,13 +267,13 @@ class BayesFRET(Ui_MainWindow):
         self.menu3_syn = QAction( self.func_getIcon( "folderblue_92960.ico" ), "Synthetic Data: Import Pickle File" )
         self.menu3_syn.triggered.connect( self.func_CONTEXT_import_syn_data )
         self.menu.addAction( self.menu3_syn )
-        self.menu4_show = QAction( self.func_getIcon( "eye_slash_visible_hide_hidden_show_icon_145987.ico" ), "Hide Graphs During Run" )
+        self.menu4_show = QAction( self.func_getIcon( "disable_eye_hidden_hide_internet_security_view_icon_127055.ico" ), "Hide Graphs During Run" )
         self.menu4_show.triggered.connect( self.checkBox.click )
         self.menu.addAction( self.menu4_show )
-        self.menu5_size = QAction( self.func_getIcon( "size_maximize_icon_142968.ico" ), "Maximize Graph Size" )
+        self.menu5_size = QAction( self.func_getIcon( "arrow_expand_full_fullscreen_internet_screen_security_icon_127065.ico" ), "Maximize Graph Size" )
         self.menu5_size.triggered.connect( self.func_CONTEXT_toggle_size )
         self.menu.addAction( self.menu5_size )
-        self.menu6_random = QAction( self.func_getIcon( "shuffle_121752.ico" ), "Randomize RNG Seeds" )
+        self.menu6_random = QAction( self.func_getIcon( "multimedia_option_change_exchange_random_arrows_shuffle_icon_258796.ico" ), "Randomize RNG Seeds" )
         self.menu6_random.triggered.connect( self.func_SEEDS_randomize )
         self.menu.addAction( self.menu6_random )
         self.menu7_reset = QAction( self.func_getIcon( "arrow_back_previous_left_return_undo_icon_258802.ico" ), "Reset Settings + RNG Seeds" )
@@ -795,10 +795,8 @@ class BayesFRET(Ui_MainWindow):
         self._set_tooltip( self.radioButton_3, "Based on active monitor." if self.b_show_graphs else "Resolution (px)" )
         strt = "Show" if self.b_show_graphs else "Hide"
         self._set_tooltip( self.checkBox, f"{strt} graphs while running BayesFRET. Regardless, graphs will be saved as PNG files." )
-        iconC = "eye_slash_visible_hide_hidden_show_icon_145987.ico" if self.b_show_graphs else "eye_visible_hide_hidden_show_icon_145988.ico"
+        iconC = "disable_eye_hidden_hide_internet_security_view_icon_127055.ico" if self.b_show_graphs else "business_eye_focus_internet_security_view_vision_icon_127037.ico"
         self.menu4_show.setIcon( self.func_getIcon( iconC ) )
-        """f"{DIR_RESOURCES}{os.sep}eye_slash_visible_hide_hidden_show_icon_145987.ico" if self.b_show_graphs else 
-                                       f"{DIR_RESOURCES}{os.sep}eye_visible_hide_hidden_show_icon_145988.ico") )"""
         self.menu4_show.setText( ("Hide" if self.b_show_graphs else "Show") + " Graphs During Run" )
         if self.b_large:
             self.menu5_size.setText( "Decrease Graph Size to 1280 x 720" )
@@ -812,7 +810,7 @@ class BayesFRET(Ui_MainWindow):
         Graphs will be outputted and saved as 3200 x 1800 (`b_show_graphs=False`) or maximized (`b_show_graphs=True`).
         """
         self.b_large = True
-        self.menu5_size.setIcon(self.func_getIcon( "size_minimize_icon_142967.ico" ))
+        self.menu5_size.setIcon(self.func_getIcon( "arrow_exit_internet_minimize_reduce_screen_security_icon_127081.ico" ))
         self.menu5_size.setText( "Decrease Graph Size to 1280 x 720" )
     
     
@@ -822,7 +820,7 @@ class BayesFRET(Ui_MainWindow):
         Graphs will be outputted and saved as 1280 x 720.
         """
         self.b_large = False
-        self.menu5_size.setIcon(self.func_getIcon( "size_maximize_icon_142968.ico" ))
+        self.menu5_size.setIcon(self.func_getIcon( "arrow_expand_full_fullscreen_internet_screen_security_icon_127065.ico" ))
         self.menu5_size.setText( "Maximize Graph Size" if self.b_show_graphs else "Increase Graph Size to 3200 x 1800" )
     
     
@@ -956,7 +954,7 @@ class BayesFRET(Ui_MainWindow):
             self.menu5_size.setEnabled( False )
             self.menu7_reset.setEnabled( False )
             self.menu_run.setEnabled( False )
-            self.menu_run.setIcon(self.func_getIcon( "progress_clock_icon_135274.ico" ))
+            self.menu_run.setIcon(self.func_getIcon( "clock_time_watch_icon_181567.ico" ))
             txt = "Synthetic" if self.b_is_syn else "Experimental"
             self.menu_quit.setText( "Exit BayesFRET + " + txt + " Simulation" )
             sleep(1)
@@ -1115,7 +1113,7 @@ class BayesFRET(Ui_MainWindow):
             print("FINISHED! All functions executed & all data exported.")
             self.menu_run.setEnabled( True )
             self.menu_run.setText( "Run BayesFRET" )
-            self.menu_run.setIcon(self.func_getIcon( "play-triangle-outline_icon-icons.com_73185.ico" ))
+            self.menu_run.setIcon(self.func_getIcon( "play_music_icon_231499.ico" ))
             self.tray.setToolTip( "BayesFRET" )
             self.tray_state = " - 6 of 6.ico"
             self.tray.setIcon(self.func_getIcon( f"{self.THEME}{self.tray_state}" ))
@@ -1150,7 +1148,7 @@ class BayesFRET(Ui_MainWindow):
                 self.tray.setIcon(self.func_getIcon( f"{self.THEME}{self.tray_state}" ))
                 self.menu_t3.setText( "-- Status --" )
                 self.menu_run.setText( err_title )
-                self.menu_run.setIcon(self.func_getIcon( "progress_close_icon_138264.ico" ))
+                self.menu_run.setIcon(self.func_getIcon( "delete_remove_close_checkbox_check_icon_181586.ico" ))
                 self.menu_quit.setText( "Exit BayesFRET" )
                 self.b_already_ran = False
                 self.b_is_running = False
@@ -1182,7 +1180,7 @@ class BayesFRET(Ui_MainWindow):
                     self.menu7_reset.setEnabled( curr_reset_state )
                     self.menu_run.setEnabled( True )
                     self.menu_run.setText( "Run BayesFRET" )
-                    self.menu_run.setIcon(self.func_getIcon( "play-triangle-outline_icon-icons.com_73185.ico" ))
+                    self.menu_run.setIcon(self.func_getIcon( "play_music_icon_231499.ico" ))
                     self.b_has_error = False
                     print("\n\n> Ready for use.")
     
