@@ -1148,7 +1148,7 @@ class BayesFRET(Ui_MainWindow):
                 self.tray.setIcon(self.func_getIcon( f"{self.THEME}{self.tray_state}" ))
                 self.menu_t3.setText( "-- Status --" )
                 self.menu_run.setText( err_title )
-                self.menu_run.setIcon(self.func_getIcon( "delete_remove_close_checkbox_check_icon_181586.ico" ))
+                self.menu_run.setIcon(self.func_getIcon( "vcsconflicting_93497.ico" ))
                 self.menu_quit.setText( "Exit BayesFRET" )
                 self.b_already_ran = False
                 self.b_is_running = False

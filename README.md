@@ -107,13 +107,13 @@ for v in U.range_seeds:
 
 ```
 # >> How to Handle Name Changes <<
-# directory name change: DIR2 --> "...\BayesFRET_syn FINAL"
+# directory name change: DIR --> "...\BayesFRET_syn FINAL"
 # Filename change for 3rd seed: 'BayesFRET_data_sim_627_history.p' --> 'BayesFRET_627.p'
 
 DIR2 = "...{os.sep}BayesFRET_syn FINAL"
 with open( os.join( DIR2, "BayesFRET_Universal_class.p" ), "rb" ) as file:
     U: Universal = pickle.load(file)
-U.DIR_ACTIVE = DIR2                  # This updates the `FILEPATH` function.
+U.DIR_ACTIVE = DIR2                 # This updates the `FILEPATH` function.
 U.filenames[2] = 'BayesFRET_627.p'  # This allows you to use the previous for loop to iterate all filenames.
 ...
 with open(U.FILEPATH( os.join( DIR2, "BayesFRET_Universal_class.p" ) ), "wb") as file:
