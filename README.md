@@ -1,4 +1,4 @@
-[The BayesFRET logo.](/resources/BayesFRET_light_logo.png)
+![The BayesFRET logo.](resources/BayesFRET_light_logo.png)
 
 **BayesFRET** is a Python GUI program for estimating the number and behavior of distinct conformational states from intrinsically disordered molecules (ex. enzymes, Holliday junctions). The observed molecules must come from single-molecule Förster Resonance Energy Transfer (smFRET) experiments that use the surface-immobilized method, or from surface-immobilized smFRET experiments.
 
@@ -87,6 +87,10 @@ for v in U.range_seeds:
     with open(FILENAMES[v], "rb") as f:
         S.append( pickle.load(f) )
 ```
+
+After that, you can use the variables `U`, `params`, `TS`, and `S` to your liking.
+
+## Custom Classes
 
 * `Chain_History`: History of samples regarding key variables throughout the MCMC simulation.
     * Experimental + synthetic data: Found in `BayesFRET_data_sim_{i}_history.p` where `{i}` is the RNG seed value.
