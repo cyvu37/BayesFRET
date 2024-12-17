@@ -1,4 +1,4 @@
-![The BayesFRET logo.](resources/BayesFRET_light_logo.png)
+![The BayesFRET logo.](resources/Picture1.png)
 
 **BayesFRET** is a Python GUI program for estimating the number and behavior of distinct conformational states from intrinsically disordered molecules (ex. enzymes, Holliday junctions). The observed molecules must come from single-molecule Förster Resonance Energy Transfer (smFRET) experiments that use the surface-immobilized method, or from surface-immobilized smFRET experiments.
 
@@ -23,6 +23,8 @@ The program implements an experiment-adjusted Hierarchical Dirichlet Process-Hid
     * If internet is available when BayesFRET opens, the app will auto-run the `python -m pip install -r requirements.txt` command to verify the required packages. Make sure you have [pip](https://pip.pypa.io/en/stable/installation/) and [setuptools](https://pypi.org/project/setuptools/) in your Python environment.
     * The app will also auto-check your Python system for the required packages and the current directory for file dependencies (ex. `code01_classes.py`). Anything missing will cause the program to close.
 
+
+![The BayesFRET control panel.](resources/BayesFRET%20Control%20Panel.jpg)
 
 # The Control Panel
 The program can either use data from real experiments ("Experimental") or it can run by itself using randomly generated data simulating data from an smFRET experiment ("Synthetic"). Either way, the program will run the four MCMC simulations one at a time and visualize the results. Graphs and numerical data are saved as soon as they are produced. Refer to Section 3.1 of [my thesis paper](https://hdl.handle.net/20.500.11801/3955) for more details.
