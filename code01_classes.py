@@ -400,8 +400,10 @@ class Universal:
 
 
 
-    def func_updateStatus2(self, status: str, end: str):
-        """Updates the one-time status on the command line, context menu, and tray tooltip. Useless outside simulation."""
+    def _updateStatus2(self, status: str, end: str):
+        """
+        Updates the one-time status on the command line, context menu, and tray tooltip. DO NOT USE OUTSIDE OF SIMULATION.
+        """
         if "Done!" not in status:
             dots = "."*(50 - len(status))
             print(f"{status}{dots} ", end=end)
@@ -414,14 +416,15 @@ class Universal:
 
 
 
-    def make_pickle_compatible(self):
-        """Remove objects that can't be pickled."""
+    def func_delForPickle(self):
+        """
+        Remove objects that can't be pickled.
+        """
         del(self.TS)
         del(self.menu_t3)
         del(self.menu_run)
         del(self.tray)
         del(self.tray_state)
-        del(self.func_updateStatus2)
 
 
 

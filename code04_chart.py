@@ -227,7 +227,7 @@ class Chain_Visualize:
         status = "Exporting Figure 3 ({:d}/5)"
 
         for v, sample in enumerate(samples):
-            U.func_updateStatus2( status.format(v+1), "\r" )
+            U._updateStatus2( status.format(v+1), "\r" )
             data = 100 * sample.eff[sample.st]
             self.set_data( self.axs_eff[v], self.lns_eff[v][U.line_indx], ydata=data ) # Left
             self.draw_hist( self.axs_den[v], data, U.col_R[v] ) # Right

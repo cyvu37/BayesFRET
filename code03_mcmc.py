@@ -145,9 +145,9 @@ class Chain_Main:
         G_done = Chain_Visualize( params, samples, U, U.show, False )
         G_done.restore( samples, U )
         # Notify.
-        U.func_updateStatus2( "Exporting Figure 3 (5/5)", "" )
+        U._updateStatus2( "Exporting Figure 3 (5/5)", "" )
         G_done.fig3.savefig( U.FPATH_ACTIVE( f"BayesFRET_fig03 FRET_efficiency_final_traces.png" ) )
-        U.func_updateStatus2( "Done!", "\n" )
+        U._updateStatus2( "Done!", "\n" )
         # Update tray icon.
         U.tray_state = lstICO[-1]
         U.tray.setIcon( U.func_getIcon( f"{U.THEME}{U.tray_state}" ) )

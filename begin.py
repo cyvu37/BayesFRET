@@ -1080,7 +1080,7 @@ class BayesFRET(Ui_MainWindow):
 
             # Export Universal file.
             self.func_updateStatus1( "Exporting Universal file" )
-            self.U.make_pickle_compatible()
+            self.U.func_delForPickle()
             with open(self.U.FPATH_ACTIVE( "BayesFRET_Universal_class.p" ), "wb") as file:
                 pickle.dump( self.U, file )
             self.func_updateStatus1( "Done!" )

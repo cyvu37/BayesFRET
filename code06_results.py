@@ -87,7 +87,7 @@ def EFFICIENCY_AND_EMISSIONS(S: list[Chain_History], params: Params, U: Universa
     #
     # FIGURE 4
     #
-    U.func_updateStatus2( "Graphing Figure 4", "" )
+    U._updateStatus2( "Graphing Figure 4", "" )
     fig = U.make_figure( "4 | Densities: FRET Efficiencies", True )
     bins = 75
     a = 0.5
@@ -153,13 +153,13 @@ def EFFICIENCY_AND_EMISSIONS(S: list[Chain_History], params: Params, U: Universa
         fig.show()
         fig.canvas.flush_events()
     fig.savefig(U.FPATH_ACTIVE( f"BayesFRET_fig04 FRET_efficiency_densities.png" ))
-    U.func_updateStatus2( "Done!", "\n" )
+    U._updateStatus2( "Done!", "\n" )
     
 
     #
     # FIGURE 5a
     #
-    U.func_updateStatus2( "Graphing Figure 5a", "" )
+    U._updateStatus2( "Graphing Figure 5a", "" )
     fig = U.make_figure( "5a | Densities: Donor Emission Rates", True )
     bins1 = 125
     bins2 = 45
@@ -255,13 +255,13 @@ def EFFICIENCY_AND_EMISSIONS(S: list[Chain_History], params: Params, U: Universa
         fig.show()
         fig.canvas.flush_events()
     fig.savefig(U.FPATH_ACTIVE( f"BayesFRET_fig05a donor_emission_rates.png" ))
-    U.func_updateStatus2( "Done!", "\n" )
+    U._updateStatus2( "Done!", "\n" )
     
 
     #
     # FIGURE 5b
     #
-    U.func_updateStatus2( "Graphing Figure 5b", "" )
+    U._updateStatus2( "Graphing Figure 5b", "" )
     fig = U.make_figure( "5b | Densities: Acceptor Emission Rates", True )
 
     ax1b = fig.add_subplot( 3, 4, 9,
@@ -353,7 +353,7 @@ def EFFICIENCY_AND_EMISSIONS(S: list[Chain_History], params: Params, U: Universa
         fig.show()
         fig.canvas.flush_events()
     fig.savefig(U.FPATH_ACTIVE( f"BayesFRET_fig05b acceptor_emission_rates.png" ))
-    U.func_updateStatus2( "Done!", "\n" )
+    U._updateStatus2( "Done!", "\n" )
 
 
 
@@ -367,7 +367,7 @@ def PHOTOPHYSICS(S: list[Chain_History], params: Params, U: Universal, idxB: np.
     Args:
         idxB (array): Range of samples after the burn-in period (default: [301, 1000]).
     """
-    U.func_updateStatus2( "Gathering data for Figure 6a - 6d", "\r" )
+    U._updateStatus2( "Gathering data for Figure 6a - 6d", "\r" )
     if U.is_syn:
         true_w0_D_mcmc   = 1 - U.TS.true_wi_D[0]
         true_w1_D_mcmc   =     U.TS.true_wi_D[1]
@@ -391,7 +391,7 @@ def PHOTOPHYSICS(S: list[Chain_History], params: Params, U: Universal, idxB: np.
     #warnings.filterwarnings('ignore')
     for i in U.range_seeds:
         string = f"{fig_labels[i]} | Densities: Photophysics of RNG Seed {U.RNGs[i].seed_str}"
-        U.func_updateStatus2( f"Graphing Figure {string}", "" )
+        U._updateStatus2( f"Graphing Figure {string}", "" )
         w0_D_mcmc = 1 - S[i].wi_D[idxB, 0]
         w1_D_mcmc =     S[i].wi_D[idxB, 1]
         w0_A_mcmc = 1 - S[i].wi_A[idxB, 0]
@@ -470,7 +470,7 @@ def PHOTOPHYSICS(S: list[Chain_History], params: Params, U: Universal, idxB: np.
             fig.show()
             fig.canvas.flush_events()
         fig.savefig(U.FPATH_ACTIVE( f"BayesFRET_fig0{fig_labels[i]} photophysics_of_seed_{U.RNGs[i].seed_str}.png" ))
-        U.func_updateStatus2( "Done!", "\n" )
+        U._updateStatus2( "Done!", "\n" )
     #warnings.resetwarnings()
 
 
@@ -485,7 +485,7 @@ def CONVERGENCE(S: list[Chain_History], params: Params, U: Universal, idxA: np.n
     Args:
         idxA (array): All samples (default: [0, 1000]).
     """
-    U.func_updateStatus2( "Graphing Figure 7", "" )
+    U._updateStatus2( "Graphing Figure 7", "" )
     fig7 = U.make_figure( "7 | Results: Sample Convergence", True )
     iln = len(idxA)
     lw = 0.2
@@ -563,7 +563,7 @@ def CONVERGENCE(S: list[Chain_History], params: Params, U: Universal, idxA: np.n
         fig7.show()
         fig7.canvas.flush_events()
     fig7.savefig(U.FPATH_ACTIVE( f"BayesFRET_fig07 sample_convergence.png" ))
-    U.func_updateStatus2( "Done!", "\n" )
+    U._updateStatus2( "Done!", "\n" )
     
 
 
@@ -583,7 +583,7 @@ def FINAL_GRAPHS(S: list[Chain_History], params: Params, U: Universal, idxA: np.
     #
     # SETUP DATA
     #
-    U.func_updateStatus2( "Gathering + writing data for Figures 8a + 8b", "\r" )
+    U._updateStatus2( "Gathering + writing data for Figures 8a + 8b", "\r" )
     eff_star = 100 * params.It_A / (params.It_A + params.It_D) # Apparent FRET efficiency.
     ticker_mult = np.int64( params.T*params.dt/10 )
     t = np.arange( 0.5, params.T ) * params.dt
@@ -623,7 +623,7 @@ def FINAL_GRAPHS(S: list[Chain_History], params: Params, U: Universal, idxA: np.
     #
     # FIGURE 8a
     #
-    U.func_updateStatus2( "Graphing Figure 8a", "" )
+    U._updateStatus2( "Graphing Figure 8a", "" )
     fig8a = U.make_figure( "8a | Results: State Convergence", True )
     bins = np.int64( params.N / (10 if params.N >= 50 else 2) )
     num = U.len_seeds
@@ -752,13 +752,13 @@ def FINAL_GRAPHS(S: list[Chain_History], params: Params, U: Universal, idxA: np.
         fig8a.show()
         fig8a.canvas.flush_events()
     fig8a.savefig(U.FPATH_ACTIVE( f"BayesFRET_fig08a state_convergence.png" ))
-    U.func_updateStatus2( "Done!", "\n" )
+    U._updateStatus2( "Done!", "\n" )
 
 
     #
     # FIGURE 8b
     #
-    U.func_updateStatus2( "Graphing Figure 8b", "" )
+    U._updateStatus2( "Graphing Figure 8b", "" )
     fig8b = U.make_figure( "8b | Best FRET Efficiency Traces", False, 1 )
     ax = fig8b.add_subplot( 1, 5, (1, 4),
                             anchor = 'W',
@@ -807,7 +807,7 @@ def FINAL_GRAPHS(S: list[Chain_History], params: Params, U: Universal, idxA: np.
         fig8b.show()
         fig8b.canvas.flush_events()
     fig8b.savefig(U.FPATH_ACTIVE( f"BayesFRET_fig08b FRET_efficiency_best_traces.png" ))
-    U.func_updateStatus2( "Done!", "\n" )
+    U._updateStatus2( "Done!", "\n" )
     
 
 
