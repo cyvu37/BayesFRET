@@ -1,10 +1,10 @@
-**BayesFRET** is a Python GUI program for estimating the number and behavior of distinct conformational states from intrinsically disordered molecules (ex. enzymes, Holliday junctions). The observed molecules must come from single-molecule Förster Resonance Energy Transfer (smFRET) experiments that use the surface-immobilized method (a.k.a. surface-immobilized smFRET experiments).
+**BayesFRET** is a Python GUI program for estimating the number and behavior of distinct conformational states from intrinsically disordered molecules (ex. enzymes, Holliday junctions). The observed molecules must come from single-molecule Förster Resonance Energy Transfer (smFRET) experiments that use the surface-immobilized method, or from surface-immobilized smFRET experiments.
 
-The program implements an experiment-adjusted Hierarchical Dirichlet Process-Hidden Markov Model (HDP-HMM) framework to process time-binned photon intensities of the donor and acceptor dyes, or the data source, from the smFRET experiment. Each set of simulations produces a folder of graphs and numerical data. An in-depth analysis of topics related to smFRET and HDP-HMM can be found in [the thesis paper].
+The program implements an experiment-adjusted Hierarchical Dirichlet Process-Hidden Markov Model (HDP-HMM) to process time-binned photon intensities of the donor and acceptor dyes, or the data source, from the smFRET experiment. Each set of simulations produces a folder of graphs and numerical data. [My thesis paper](https://hdl.handle.net/20.500.11801/3955) provides an in-depth analysis of the math and process behind this program.
 
 **Data Source**: Time-binned photon intensities (TXT) of the donor and acceptor dyes from a surface-immobilized smFRET experiment.
 
-**Method**: Four controlled simulations using an experiment-adjusted Hierarchical Dirichlet Process-Hidden Markov Model (HDP-HMM) framework.
+**Method**: Four controlled MCMC simulations using an experiment-adjusted Hierarchical Dirichlet Process-Hidden Markov Model (HDP-HMM).
 
 **Results**: A folder of graphs (PNG) and numerical data (Pickle, TXT files).
 
@@ -12,13 +12,12 @@ The program implements an experiment-adjusted Hierarchical Dirichlet Process-Hid
 # Installation
 1. **Compatible Operating Systems**: Tested on Windows 11, macOS. Not yet for Linux, Docker.
 1. **Python Interpreter & Environment**
-    * Compatible versions: 3.11, 3.12
+    * Compatible versions: 3.11, 3.12, 3.13
     * This documentation will assume the Python CMD function is `python`, but your local system may use `python3`, `python3.12`, `py`, etc.
 1. **Download Files**: Assign a folder specifically for the files of this program (ex. `C:\Users\Cyvu37\Documents\BayesFRET`). 
     * Make sure the parent directory of the program folder (ex. `C:\Users\Cyvu37\Documents`) doesn't require administrator access. BayesFRET must be able to produce subdirectories and files!
 1. **Install Packages**: [chime](https://github.com/MaxHalford/chime), [darkdetect](https://github.com/albertosottile/darkdetect), [matplotlib](https://matplotlib.org/), [numpy](https://numpy.org/), [PySide6](https://doc.qt.io/qtforpython-6/), [scipy](https://scipy.org/)
-    * If internet is available when BayesFRET opens, the app will auto-run the `python -m pip install -r requirements.txt` command to verify the required packages.
-      * If you're using a fresh version of Python, then manually install [pip](https://pip.pypa.io/en/stable/installation/) and [setuptools](https://pypi.org/project/setuptools/) first!
+    * If internet is available when BayesFRET opens, the app will auto-run the `python -m pip install -r requirements.txt` command to verify the required packages. Make sure you have [pip](https://pip.pypa.io/en/stable/installation/) and [setuptools](https://pypi.org/project/setuptools/) in your Python environment.
     * If no internet is available, the app will check your Python system for the required packages. If any package is missing, the program will auto-close.
 
 

@@ -25,7 +25,6 @@ print("\nChecking requirements.............................\n")
 import os, pickle, sys, traceback
 from datetime import datetime
 from functools import partial
-#from gc import collect
 from importlib.metadata import distributions
 from platform import system
 from shutil import rmtree
@@ -60,7 +59,7 @@ missing_pkgs = [x for x in req_pkgs if x not in curr_pkgs]
 if len(missing_pkgs) > 0:
     sys.exit( "\n\nERROR: Can't install missing Python packages. --> Can't run program." )
 
-# File check.
+# File dependency check.
 req_files = ["code01_classes.py", "code02_setup.py", "code03_mcmc.py", "code04_chart.py", "code05_update.py", "code06_results.py"]
 lis_files = [f for f in os.listdir(DIR_PROGRAM) if f in req_files]
 if len(lis_files) != len(req_files):

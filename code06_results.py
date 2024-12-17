@@ -23,7 +23,6 @@ Code by Jared Hidalgo.
 Inspired by MATLAB code from Ioannis Sgouralis, Shreya Madaan, Franky Djutanta, Rachael Kha, Rizal F. Hariadi, and Steve Pressé for "A Bayesian Nonparametric Approach to Single Molecule Förster Resonance Energy Transfer".
 """
 # Import internal packages for use.
-#import warnings
 from collections import Counter
 from pickle import load
 # Import external packages for use.
@@ -60,24 +59,25 @@ def GRAPH_ALL(params: Params, U: Universal):
     idxA = np.arange( 0, params.N+1, 1, dtype=np.int64 ) # Range of all samples.
     burnin_idx = np.ceil( U.burn_in*params.N ) # End of the burn-in period.
     idxB = np.arange( burnin_idx, params.N+1, 1, dtype=np.int64 ) # Range of samples after the burn-in period.
+    eff_star = 100 * params.It_A / (params.It_A + params.It_D)
     
-    EFFICIENCY_AND_EMISSIONS(S, params, U, idxB)
+    EFFICIENCY_AND_EMISSIONS(S, params, U, idxB, eff_star)
     PHOTOPHYSICS(S, params, U, idxB)
     CONVERGENCE(S, params, U, idxA)
-    FINAL_GRAPHS(S, params, U, idxA, burnin_idx, idxB)
+    FINAL_GRAPHS(S, params, U, idxA, burnin_idx, idxB, eff_star)
 
 
 
 
 
-def EFFICIENCY_AND_EMISSIONS(S: list[Chain_History], params: Params, U: Universal, idxB: np.ndarray):
+def EFFICIENCY_AND_EMISSIONS(S: list[Chain_History], params: Params, U: Universal, idxB: np.ndarray, eff_star: np.ndarray[float]):
     """
     Generates & saves Figures 4, 5A, and 5B.
 
     Args:
         idxB (array): Range of samples after the burn-in period (default: [301, 1000]).
+        eff_star (array[float]): The apparent FRET efficiency.
     """
-    eff_star   = 100 * params.It_A / (params.It_A + params.It_D)
     lam_D_star = params.It_D / params.dD
     lam_A_star = params.It_A / params.dD
     if U.is_syn:
@@ -571,7 +571,7 @@ def CONVERGENCE(S: list[Chain_History], params: Params, U: Universal, idxA: np.n
 
 
 
-def FINAL_GRAPHS(S: list[Chain_History], params: Params, U: Universal, idxA: np.ndarray, burnin_idx: int, idxB: np.ndarray):
+def FINAL_GRAPHS(S: list[Chain_History], params: Params, U: Universal, idxA: np.ndarray, burnin_idx: int, idxB: np.ndarray, eff_star: np.ndarray[float]):
     """
     Generates & saves Figures 8a + 8b.
 
@@ -579,12 +579,12 @@ def FINAL_GRAPHS(S: list[Chain_History], params: Params, U: Universal, idxA: np.
         idxA (array): All samples (default: [0, 1000]).
         burnin_idx (int): End of the burn-in period (default: 300).
         idxB (array): Range of samples after the burn-in period (default: [301, 1000]).
+        eff_star (array[float]): The apparent FRET efficiency.
     """
     #
     # SETUP DATA
     #
     U._updateStatus2( "Gathering + writing data for Figures 8a + 8b", "\r" )
-    eff_star = 100 * params.It_A / (params.It_A + params.It_D) # Apparent FRET efficiency.
     ticker_mult = np.int64( params.T*params.dt/10 )
     t = np.arange( 0.5, params.T ) * params.dt
     eff_mcmc_all = [[ 100 * c.eff[ idxB[j], c.st[idxB[j]] ] 

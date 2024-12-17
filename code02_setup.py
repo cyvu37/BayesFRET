@@ -450,12 +450,6 @@ def GRAPH_PRIORS(params: Params, U: Universal):
     fA_temp = params.rho_A_prior_psi / params.kap_A_prior_psi * params.kap_A_prior_phi / params.rho_A_prior_phi
     pD_temp = fD_temp * np.power( fD_temp*BS_temp, params.kap_D_prior_phi-1 ) * np.power( 1+(fD_temp*BS_temp), -params.kap_D_prior_phi-params.rho_D_prior_phi ) / betaS( params.kap_D_prior_phi, params.rho_D_prior_phi )
     pA_temp = fA_temp * np.power( fA_temp*BS_temp, params.kap_A_prior_phi-1 ) * np.power( 1+(fA_temp*BS_temp), -params.kap_A_prior_phi-params.rho_A_prior_phi ) / betaS( params.kap_A_prior_phi, params.rho_A_prior_phi )
-    """xD_temp = params.rho_D_prior_psi / params.kap_D_prior_psi * params.kap_D_prior_phi / params.rho_D_prior_phi * BS_temp
-    xA_temp = params.rho_A_prior_psi / params.kap_A_prior_psi * params.kap_A_prior_phi / params.rho_A_prior_phi * BS_temp
-    pD_temp = np.power( xD_temp, params.kap_D_prior_phi-1 ) * np.power( 1+xD_temp, -params.kap_D_prior_phi-params.rho_D_prior_phi ) / betaS( params.kap_D_prior_phi, params.rho_D_prior_phi )
-    pA_temp = np.power( xA_temp, params.kap_A_prior_phi-1 ) * np.power( 1+xA_temp, -params.kap_A_prior_phi-params.rho_A_prior_phi ) / betaS( params.kap_A_prior_phi, params.rho_A_prior_phi )
-    pD_temp = params.rho_D_prior_psi / params.kap_D_prior_psi * params.kap_D_prior_phi / params.rho_D_prior_phi * pD_temp
-    pA_temp = params.rho_A_prior_psi / params.kap_A_prior_psi * params.kap_A_prior_phi / params.rho_A_prior_phi * pA_temp"""
     xlim = s22.get_xlim()
     pD_temp = np.amin(xlim) + 1*(np.amax(xlim)-np.amin(xlim)) * pD_temp / np.amax(pD_temp)
     pA_temp = np.amin(xlim) + 1*(np.amax(xlim)-np.amin(xlim)) * pA_temp / np.amax(pA_temp)
