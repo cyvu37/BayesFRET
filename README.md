@@ -1,12 +1,12 @@
 ![The BayesFRET logo.](resources/Picture1.png)
 
-**BayesFRET** is a Python GUI program for estimating the number and behavior of distinct conformational states from intrinsically disordered molecules (ex. enzymes, Holliday junctions). The observed molecules must come from single-molecule Förster Resonance Energy Transfer (smFRET) experiments that use the surface-immobilized method, or from surface-immobilized smFRET experiments.
+**BayesFRET** is a Python GUI program for estimating the number and behavior of distinct conformational states from intrinsically disordered molecules (ex. enzymes, Holliday junctions) through multiple Markov Chain Monte Carlo (MCMC) simulations. The observed molecules must come from single-molecule Förster Resonance Energy Transfer (smFRET) experiments that use the surface-immobilized method, or from surface-immobilized smFRET experiments.
 
 The program implements an experiment-adjusted Hierarchical Dirichlet Process-Hidden Markov Model (HDP-HMM) to process time-binned photon intensities of the donor and acceptor dyes, or the data source, from the smFRET experiment. Each set of simulations produces a directory of graphs and numerical data. [My thesis paper](https://hdl.handle.net/20.500.11801/3955) provides an in-depth analysis of the math and process behind this program.
 
 **Data Source**: Time-binned photon intensities (TXT) of the donor and acceptor dyes from a surface-immobilized smFRET experiment.
 
-**Method**: Four controlled Markov Chain Monte Carlo (MCMC) simulations within an experiment-adjusted HDP-HMM.
+**Method**: Four controlled MCMC simulations within an experiment-adjusted HDP-HMM.
 
 **Results**: A directory of graphs (PNG) and numerical data (Pickle, TXT files).
 
@@ -24,11 +24,11 @@ The program implements an experiment-adjusted Hierarchical Dirichlet Process-Hid
     * The app will also auto-check your Python system for the required packages and the current directory for file dependencies (ex. `code01_classes.py`). Anything missing will cause the program to close.
 
 
+# Before: The Control Panel
+
 ![The BayesFRET control panel.](resources/BayesFRET%20Control%20Panel.jpg)
 
-# The Control Panel
-The program can either use data from real experiments ("Experimental") or it can run by itself using randomly generated data simulating data from an smFRET experiment ("Synthetic"). Either way, the program will run the four MCMC simulations one at a time and visualize the results. Graphs and numerical data are saved as soon as they are produced. Refer to Section 3.1 of [my thesis paper](https://hdl.handle.net/20.500.11801/3955) for more details.
-
+The program can either use data from real experiments ("Experimental") or it can run by itself using randomly generated data simulating data from an smFRET experiment ("Synthetic"). Either way, the program will run the four MCMC simulations one at a time and visualize the results. Graphs and numerical data are saved as soon as they are produced. [Details coming soon.]
 
 ## Data Source Requirements
 * **Synthetic Mode**: None. The program generates its own data and compares it with the MCMC simulations.
@@ -39,7 +39,7 @@ The program can either use data from real experiments ("Experimental") or it can
     * Parameters of the experiment for the Options section of the GUI.
 
 
-# Running the Program
+# During: Running the Program
 When BayesFRET runs the simulations, the program stores the information inputted through the GUI into a directory with the exact timestamp of when the run started, or **the active directory**. 
 
 BayesFRET uses a Universal class to store various miscellaneous data, including absolute URIs to their original directories. After the program finishes its run, data from the Universal class is saved to replicate the program's output. See the [Interpreting the Results](#interpreting-the-results) section for more information.
@@ -50,7 +50,7 @@ BayesFRET uses a Universal class to store various miscellaneous data, including 
 * Don't interact with the GUI or its windows while the simulations are running! This version doesn't support multithreading yet.
 
 
-# Interpreting the Results
+# After: Interpreting the Results
 
 Each pickle file (`.p`) produced by this program contains data that can be instantly used in a Python environment. However, they contain custom Python classes from `code01_classes.py`. Copy `code01_classes.py` to your current directory to access the documentation of the Python classes. An advanced code editor like Visual Studio Code with extensions can provide the user with previews of documentation regarding those custom classes.
 
