@@ -48,7 +48,7 @@ TBA
 # During: Running the Program
 When BayesFRET runs the simulations, the program stores the information inputted through the GUI into a directory with the exact timestamp of when the run started, or **the active directory**. 
 
-BayesFRET uses a Universal class to store various miscellaneous data, including absolute URIs to their original directories. After the program finishes its run, data from the Universal class is saved to replicate the program's output. See the [Interpreting the Results](#interpreting-the-results) section for more information.
+BayesFRET uses a Universal class to store various miscellaneous data, including absolute URIs to their original directories. After the program finishes its run, data from the Universal class is saved to replicate the program's output. See the [Custom Classes](#custom-classes) section for more information.
 
 ## Avoid These Things
 
