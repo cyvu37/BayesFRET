@@ -28,7 +28,7 @@ The program implements an experiment-adjusted Hierarchical Dirichlet Process-Hid
 
 ![The BayesFRET control panel.](resources/BayesFRET%20Control%20Panel.jpg)
 
-The program can either use data from real experiments ("Experimental") or it can run by itself using randomly generated data simulating data from an smFRET experiment ("Synthetic"). Either way, the program will run the four MCMC simulations one at a time and visualize the results. Graphs and numerical data are saved as soon as they are produced. [Details coming soon.]
+The program can either use data from real experiments ("Experimental") or it can run by itself using randomly generated data simulating data from an smFRET experiment ("Synthetic"). Either way, the program will run the four MCMC simulations one at a time and visualize the results. Graphs and numerical data are saved as soon as they are produced.
 
 ## Data Source Requirements
 * **Synthetic Mode**: None. The program generates its own data and compares it with the MCMC simulations.
@@ -37,6 +37,12 @@ The program can either use data from real experiments ("Experimental") or it can
         * 1 for the intensities of the *acceptor* dye throughout the experiment.
         * 1 for the intensities of the *donor* dye throughout the experiment.
     * Parameters of the experiment for the Options section of the GUI.
+
+## GUI Features
+TBA
+
+## Other Features
+TBA
 
 
 # During: Running the Program
