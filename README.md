@@ -23,6 +23,9 @@ The program implements an experiment-adjusted Hierarchical Dirichlet Process-Hid
     * If internet is available when BayesFRET opens, the app will auto-run the `python -m pip install -r requirements.txt` command to verify the required packages. Make sure you have [pip](https://pip.pypa.io/en/stable/installation/) and [setuptools](https://pypi.org/project/setuptools/) in your Python environment.
     * The app will also auto-check your Python system for the required packages and the current directory for file dependencies (ex. `code01_classes.py`). Anything missing will cause the program to close.
 
+***
+
+**NOTE: The following content will be moved to the Wiki section.**
 
 # Before: The Control Panel
 
