@@ -18,10 +18,9 @@ Code by Jared Hidalgo.
 Inspired by MATLAB code from Ioannis Sgouralis, Shreya Madaan, Franky Djutanta, Rachael Kha, Rizal F. Hariadi, and Steve Pressé for "A Bayesian Nonparametric Approach to Single Molecule Förster Resonance Energy Transfer".
 """
 title = "BayesFRET: An Experiment-Adjusted HDP-HMM to Analyze Surface-Immobilized smFRET Data"
-
-# Import internal packages.
 print("\nChecking requirements.............................\n")
 
+# Import internal packages.
 import os, pickle, sys, traceback
 from datetime import datetime
 from functools import partial
@@ -44,6 +43,12 @@ od_dict = {
 }
 open_directory = od_dict[system()] if system() in od_dict else "xdg-open"
 
+# File dependency check.
+req_files = ["code01_classes.py", "code02_setup.py", "code03_mcmc.py", "code04_chart.py", "code05_update.py", "code06_results.py", "requirements.txt"]
+lis_files = [f for f in os.listdir(DIR_PROGRAM) if f in req_files]
+if len(lis_files) != len(req_files):
+    sys.exit( "\n\nERROR: Missing Python files. --> Can't run program." )
+
 # Package check: Online attempt.
 try:
     call( f"{sys.executable} -m pip install -U pip", shell=True )
@@ -58,12 +63,6 @@ curr_pkgs    = [dist.metadata['Name'] for dist in distributions()]
 missing_pkgs = [x for x in req_pkgs if x not in curr_pkgs]
 if len(missing_pkgs) > 0:
     sys.exit( "\n\nERROR: Can't install missing Python packages. --> Can't run program." )
-
-# File dependency check.
-req_files = ["code01_classes.py", "code02_setup.py", "code03_mcmc.py", "code04_chart.py", "code05_update.py", "code06_results.py"]
-lis_files = [f for f in os.listdir(DIR_PROGRAM) if f in req_files]
-if len(lis_files) != len(req_files):
-    sys.exit( "\n\nERROR: Missing Python files. --> Can't run program." )
 
 print("\n\nDone!\nBooting BayesFRET................................. ", end="")
 
