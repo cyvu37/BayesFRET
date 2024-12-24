@@ -1,21 +1,21 @@
 ![The BayesFRET logo.](resources/Picture1.png)
 
-**BayesFRET** is a Python GUI program for estimating the number and behavior of distinct conformational states from intrinsically disordered molecules (ex. enzymes, Holliday junctions) through multiple Markov Chain Monte Carlo (MCMC) simulations. The observed molecules must come from single-molecule Förster Resonance Energy Transfer (smFRET) experiments that use the surface-immobilized method, or from surface-immobilized smFRET experiments.
+**BayesFRET** is a Python GUI program of a nonparametric Bayesian method (HDP-HMM) to estimate the number and behavior of distinct conformational states of an intrinsically-disordered molecule (ex. enzymes, Holliday junctions) from a surface-immobilized single-molecule Forster Resonance Energy Transfer (smFRET) experiment. This was originally a Ph.D.-level NSF project that became my [M.S. thesis](https://hdl.handle.net/20.500.11801/3955).
 
-The program implements an experiment-adjusted Hierarchical Dirichlet Process-Hidden Markov Model (HDP-HMM) to process time-binned photon intensities of the donor and acceptor dyes, or the data source, from the smFRET experiment. Each set of simulations produces a directory of graphs and numerical data. [My thesis paper](https://hdl.handle.net/20.500.11801/3955) provides an in-depth analysis of the math and process behind this program.
+* **Data**: Real (experimental) or mimicked (synthetic) time-binned photon intensities and experiment parameters of a molecule. Prior distributions optional.
+* **Method**: 4 Markov Chain Monte Carlo (MCMC) simulations on an experiment-informed Hierarchical Dirichlet Process-Hidden Markov Model (HDP-HMM).
+* **Results**: A directory of graphs (PNG) and numerical data (Pickle, TXT files) of simulation history and convergence.
 
-**Data Source**: Time-binned photon intensities (TXT) of the donor and acceptor dyes from a surface-immobilized smFRET experiment.
+For example, an enzyme usually has at least 2 conformational states (open for business, closed for processing), but we don't know the number of states by default.​
 
-**Method**: Four controlled MCMC simulations within an experiment-adjusted HDP-HMM.
-
-**Results**: A directory of graphs (PNG) and numerical data (Pickle, TXT files).
+Original work and MATLAB app were made by [Sgouralis et al](https://pubs.acs.org/doi/10.1021/acs.jpcb.8b09752). This GUI enhances and expands capabilities from the original work, taking initiative to increase the number of MCMC simulations from 1 to 4 and to increase app efficiency.
 
 
 # Installation
-1. **Compatible Operating Systems**: Successful testing on Windows 10/11 and macOS. Not yet for Linux.
+1. **Compatible Operating Systems**: Successful testing on Windows 10/11 and macOS. Untested for Linux.
 1. **Python Interpreter & Environment**
     * Compatible versions: 3.11, 3.12, 3.13
-    * This documentation will assume the Python call function is `python`.
+    * This documentation will assume the Python CMD call function is `python`.
 1. **Download Files**: Assign a directory specifically for the files of this program (ex. `C:\Users\Cyvu37\Documents\BayesFRET`). 
     * Make sure the parent directory of the program directory (ex. `C:\Users\Cyvu37\Documents`) doesn't require administrator access. BayesFRET must be able to produce subdirectories and files!
     * Processing power may vary based on the directory's location.
@@ -81,8 +81,7 @@ from code01_classes import Chain_History, Params, True_Samples, Universal
 with open( os.join( DIR, "BayesFRET_Universal_class.p" ), "rb" ) as file:
     U: Universal = pickle.load(file)
 
-# Import the parameters class (`params`).
-# If synthetic, also import the true samples class (`TS`).
+# Import the parameters class (`params`). If synthetic, also import the true samples class (`TS`).
 with open( os.join( DIR, "BayesFRET_data_params_and_true.p" ), "rb" ) as file:
     if U.is_syn:
         X = pickle.load(file)
