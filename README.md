@@ -1,4 +1,4 @@
-![The BayesFRET logo.](resources/Picture1.png)
+<p align="center"><img src="resources/BayesFRET - banner.png"/></p>
 
 **BayesFRET** is a Python GUI program of a nonparametric Bayesian method (HDP-HMM) to estimate the number and behavior of distinct conformational states of an intrinsically-disordered molecule (ex. enzymes, Holliday junctions) from a surface-immobilized single-molecule Forster Resonance Energy Transfer (smFRET) experiment. This was originally a Ph.D.-level NSF project that became my [M.S. thesis](https://hdl.handle.net/20.500.11801/3955).
 
@@ -12,6 +12,7 @@ Original work and MATLAB app were made by [Sgouralis et al](https://pubs.acs.or
 
 
 # Installation
+
 1. **Compatible Operating Systems**: Successful testing on Windows 10/11 and macOS. Untested for Linux.
 1. **Python Interpreter & Environment**
     * Compatible versions: 3.11, 3.12, 3.13
@@ -27,9 +28,10 @@ Original work and MATLAB app were made by [Sgouralis et al](https://pubs.acs.or
 
 **NOTE: The following content will be moved to the Wiki section.**
 
-# Before: The Control Panel
 
-![The BayesFRET control panel.](resources/BayesFRET%20Control%20Panel.jpg)
+# Before Run: The Control Panel
+
+<p align="center"><img src="resources/BayesFRET - control panel.jpg"/></p>
 
 The program can either use data from real experiments ("Experimental") or it can run by itself using randomly generated data simulating data from an smFRET experiment ("Synthetic"). Either way, the program will run the four MCMC simulations one at a time and visualize the results. Graphs and numerical data are saved as soon as they are produced.
 
@@ -44,11 +46,35 @@ The program can either use data from real experiments ("Experimental") or it can
 ## GUI Features
 TBA
 
-## Other Features
-TBA
+## The System Tray Icon
+
+<p align="center"><img src="resources/BayesFRET - system icon.jpg"/></p>
+
+When opened, BayesFRET produces a system tray icon in Windows and macOS. Right-clicking the icon in Windows or left-clicking the icon in macOS yields a context menu of commands. The "Status" and "Settings" sections of the context menu are shortcuts to commands in the GUI. 
+
+Context Menu CMD | GUI Equivalent
+:----------------|:----------------
+Run BayesFRET | "Run" button in Settings section (when enabled)
+Exit BayesFRET | Closing the GUI
+Experimental Data: Import Donor File | Select "Experimental", then "Donor" button
+Experimental Data: Import Acceptor File | Select "Experimental", then "Acceptor" button
+Synthetic Data: Import Pickle File | Select "Synthetic - Reuse", then "Parameters + True Values" button
+Hide/Show Graphs During Run | Boolean to "Show Windows" checkbox
+Graph Size* | Changing radio buttons in Graph Options group
+Randomize RNG Seeds | "Randomize!" button in RNG Seeds group
+Reset Settings + RNG Seeds | "Reset" button in Options section (when enabled)
+
+*"Maximize Graph Size" when "Show Graphs" / "Increase Graph Size to 3200 x 1800" when "Hide Graphs" / "Decrease Graph Size to 1280 x 720"
+
+**Move GUI**: The commands below the "--Status--" and "--Settings--" sections of the context menu deal with positioning the GUI panel to one of the four corners of each active monitor in the local computer, accounting for the task bar in Windows and the menu bar in macOS. Each section corresponds to each active monitor. If you're showing graphs during a run, then these commands can move the GUI away from the open windows. 
+
+**Changing Monitors**: When adding or removing an active monitor on the local computer, the GUI will automatically refresh the icon's context menu with commands for each active monitor.
+
+**Status**: During a run, hovering the mouse over the system tray icon will produce a tooltip showing the status of the program. If the icon's context menu appears during the run, the "--Status--" header and "Run BayesFRET" command will be replaced with status messages. Moreover, the commands in the "--Settings--" section will be disabled.
 
 
-# During: Running the Program
+# During Run: Running the Program
+
 When BayesFRET runs the simulations, the program stores the information inputted through the GUI into a directory with the exact timestamp of when the run started, or **the active directory**. 
 
 BayesFRET uses a Universal class to store various miscellaneous data, including absolute URIs to their original directories. After the program finishes its run, data from the Universal class is saved to replicate the program's output. See the [Custom Classes](#custom-classes) section for more information.
@@ -56,10 +82,10 @@ BayesFRET uses a Universal class to store various miscellaneous data, including 
 ## Avoid These Things
 
 * Don't modify the BayesFRET or active directories, including their URIs and internal files, while BayesFRET runs the simulations!
-* Don't interact with the GUI or its windows while the simulations are running! This version doesn't support multithreading yet.
+* Don't interact with the GUI, its windows, or the system tray icon while the simulations are running! This version doesn't support multithreading yet.
 
 
-# After: Interpreting the Results
+# After Run: Interpreting the Results
 
 Each pickle file (`.p`) produced by this program contains data that can be instantly used in a Python environment. However, they contain custom Python classes from `code01_classes.py`. Copy `code01_classes.py` to your current directory to access the documentation of the Python classes. An advanced code editor like Visual Studio Code with extensions can provide the user with previews of documentation regarding those custom classes.
 
