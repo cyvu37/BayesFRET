@@ -46,11 +46,11 @@ The program can either use data from real experiments ("Experimental") or it can
 ## GUI Features
 TBA
 
-## The System Tray Icon
+## GUI: The System Tray Icon
 
 <p align="center"><img src="resources/BayesFRET - system icon.jpg"/></p>
 
-When opened, BayesFRET produces a system tray icon in Windows and macOS. Right-clicking the icon in Windows or left-clicking the icon in macOS yields a context menu of commands. The "Status" and "Settings" sections of the context menu are shortcuts to commands in the GUI. 
+When opened, BayesFRET produces a system tray icon in Windows and macOS. The _Status_ and _Settings_ sections of the context menu are shortcuts to commands in the GUI. 
 
 Context Menu CMD | GUI Equivalent
 :----------------|:----------------
@@ -60,17 +60,35 @@ Experimental Data: Import Donor File | Select "Experimental", then "Donor" butto
 Experimental Data: Import Acceptor File | Select "Experimental", then "Acceptor" button
 Synthetic Data: Import Pickle File | Select "Synthetic - Reuse", then "Parameters + True Values" button
 Hide/Show Graphs During Run | Boolean to "Show Windows" checkbox
-Graph Size* | Changing radio buttons in Graph Options group
+Graph Size*** | Changing radio buttons in Graph Options group
 Randomize RNG Seeds | "Randomize!" button in RNG Seeds group
 Reset Settings + RNG Seeds | "Reset" button in Options section (when enabled)
 
-*"Maximize Graph Size" when "Show Graphs" / "Increase Graph Size to 3200 x 1800" when "Hide Graphs" / "Decrease Graph Size to 1280 x 720"
-
-**Move GUI**: The commands below the "--Status--" and "--Settings--" sections of the context menu deal with positioning the GUI panel to one of the four corners of each active monitor in the local computer, accounting for the task bar in Windows and the menu bar in macOS. Each section corresponds to each active monitor. If you're showing graphs during a run, then these commands can move the GUI away from the open windows. 
+**Move GUI**: The commands below the _--Status--_ and _--Settings--_ sections of the context menu deal with positioning the GUI panel to one of the four corners of each active monitor in the local computer, accounting for the task bar in Windows and the menu bar in macOS. Each section corresponds to each active monitor. If you're showing graphs during a run, then these commands can move the GUI away from the open windows. 
 
 **Changing Monitors**: When adding or removing an active monitor on the local computer, the GUI will automatically refresh the icon's context menu with commands for each active monitor.
 
-**Status**: During a run, hovering the mouse over the system tray icon will produce a tooltip showing the status of the program. If the icon's context menu appears during the run, the "--Status--" header and "Run BayesFRET" command will be replaced with status messages. Moreover, the commands in the "--Settings--" section will be disabled.
+**Status**: During a run, hovering the mouse over the system tray icon will produce a tooltip showing the status of the program. If the icon's context menu appears during the run, the _--Status--_ header and "Run BayesFRET" command will be replaced with status messages. Moreover, the commands in the _--Settings--_ section will be disabled.
+
+### ***Handling the Graph Size Button
+
+The 5th context menu button under _--Settings--_ may be confusing, so here are two perspectives.
+
+1. **What It Means**: In the _Graph Options_ section of the GUI, when the radio button [A] is selected and the "Show Windows" checkbox is [B], then the text for the 5th context menu button under _--Settings--_ is [C]:
+
+A | B | C
+:------------|:--------------|:--------------
+"1280 x 720" | enabled | "Maximize Graph Size"
+"1280 x 720" | disabled | "Increase Graph Size to 3200 x 1800"
+"Maximized" | enabled or disabled | "Decrease Graph Size to 1280 x 720"
+
+2. **What It Does**: When the text for the 5th context menu button under _--Settings--_ is [A], selecting that button will change the radio button to [B] while keeping the "Show Windows" checkbox as [C]:
+
+A | B | C
+:------------|:--------------|:--------------
+"Maximize Graph Size" | "Maximized" | enabled
+"Increase Graph Size to 3200 x 1800" | "3200 x 1800" | disabled
+"Decrease Graph Size to 1280 x 720" | "1280 x 720" | enabled or disabled
 
 
 # During Run: Running the Program
@@ -79,7 +97,7 @@ When BayesFRET runs the simulations, the program stores the information inputted
 
 BayesFRET uses a Universal class to store various miscellaneous data, including absolute URIs to their original directories. After the program finishes its run, data from the Universal class is saved to replicate the program's output. See the [Custom Classes](#custom-classes) section for more information.
 
-## Avoid These Things
+## Avoid These Things While Running
 
 * Don't modify the BayesFRET or active directories, including their URIs and internal files, while BayesFRET runs the simulations!
 * Don't interact with the GUI, its windows, or the system tray icon while the simulations are running! This version doesn't support multithreading yet.
