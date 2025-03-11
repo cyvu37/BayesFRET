@@ -445,10 +445,10 @@ class BayesFRET(Ui_MainWindow):
             # Closing message.
             display_text = "Shutting down BayesFRET." # Length must be even number to align.
             lines = "".join( ["-"]*56 )
-            spaces_num = int((56 - len(display_text))/2)
+            spaces_num = (56 - len(display_text))//2
             spaces = "".join( [" "]*spaces_num )
             print(f"{lines}\n{spaces}{display_text}{spaces}\n\n\n")
-            exit(0)
+            exit()
         else:
             try: event.ignore()
             except: pass
