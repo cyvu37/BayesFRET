@@ -65,10 +65,10 @@ class Chain_Main:
             tme = time.time()
             first_samp = deepcopy( sample )
 
-            # For each step in the MCMC simulation...
-            n = 1
-            while ( n <= params.N ):
+            for n in range(1, params.N+1):
+                # Sample for each step in the MCMC simulation.
                 sampler_update( sample, params, U, v )
+                # Option to record samples at certain intervals with `params.i_skip`.
                 if ( n % params.i_skip == 0 ):
                     history[v].st   [n] = sample.st
                     history[v].ft_D [n] = sample.ft_D
@@ -97,13 +97,12 @@ class Chain_Main:
                     history[v].kap_Z[n] = sample.kap_Z
                     
                     history[v].rec_ord[n] = [ n, 
-                                                   sample.rec[0, 0]/sample.rec[0, 1] * 100, 
-                                                   sample.rec[1, 0]/sample.rec[1, 1] * 100, 
-                                                   sample.rec[2, 0]/sample.rec[2, 1] * 100 ]
+                                                sample.rec[0, 0]/sample.rec[0, 1] * 100, 
+                                                sample.rec[1, 0]/sample.rec[1, 1] * 100, 
+                                                sample.rec[2, 0]/sample.rec[2, 1] * 100 ]
                     if U.show: G.update( sample, U, v )
                     self.func_updateStatus3( history[v].rec_ord, n, U.RNGs[v].seed_int, history[v].K_sz[n], U )
                     print("\r", end="")
-                n += 1
 
             # If showing graphs, save background.
             if U.show: G.bg = G.fig3.canvas.copy_from_bbox( G.fig3.bbox )
